@@ -5,8 +5,9 @@ import { CForm, CFormLabel, CFormInput, CFormText, CButton, CContainer } from '@
 import '@coreui/coreui/dist/css/coreui.min.css';
 import { useNavigate } from 'react-router';
 
+const { REACT_APP_TOKEN } = process.env;
 const headers = {
-  Authorization: 'Bearer 48f3b6aac5b097baec03ea1c6df126808e0ece2c01d9057ef4f8fd47bb81d1f0',
+  Authorization: `Bearer ${REACT_APP_TOKEN}`,
   'Content-Type': 'application/json',
 };
 
