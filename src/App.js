@@ -9,7 +9,9 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<UsersList />} />
-        <Route path="/:id" element={<User />} />
+        <Route path="/add" element={<User />} />
+        <Route path="/edit/:id" element={<User />} />
+        <Route path="/delete/:id" element={<User />} />
       </Routes>
     </>
   );

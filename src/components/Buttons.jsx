@@ -10,8 +10,6 @@
 //       <CButtonGroup role="group" aria-label="Basic mixed styles example">
 //         <CButton color="danger">Delete</CButton>
 //         <CButton color="warning">Edit</CButton>
-
-//         <CButton color="success">Add new</CButton>
 //       </CButtonGroup>
 //     </>
 //   );
