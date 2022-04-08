@@ -11,6 +11,9 @@ import {
   CTableDataCell,
   CButton,
   CContainer,
+  CToast,
+  CToastBody,
+  CToastClose,
 } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 
@@ -25,7 +28,6 @@ const UsersList = () => {
   const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const getAllUsrs = () => {
     axios
@@ -56,7 +58,7 @@ const UsersList = () => {
 
   const deleUser = async (id) => {
     await axios.delete(`https://gorest.co.in/public/v2/users/${id}`, { headers }).then(() => {
-      alert('user deleted');
+      alert(`User ${id} deleted`);
       getAllUsrs();
     });
   };

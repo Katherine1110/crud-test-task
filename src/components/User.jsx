@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CForm, CFormLabel, CFormInput, CFormText, CButton, CContainer } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
+import { useNavigate } from 'react-router';
 
 const headers = {
   Authorization: 'Bearer 48f3b6aac5b097baec03ea1c6df126808e0ece2c01d9057ef4f8fd47bb81d1f0',
@@ -18,6 +19,8 @@ const User = () => {
     status: '',
   });
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const getUserById = async (id) => {
     const response = await axios.get(`https://gorest.co.in/public/v2/users/${id}`);
@@ -45,13 +48,22 @@ const User = () => {
       gender: user.gender,
       status: user.status,
     };
-    console.log(`Data - ${JSON.stringify(userData)}`);
-    axios
-      .post(`https://gorest.co.in/public/v2/users`, JSON.stringify(userData), { headers })
-      .then((response) => {
-        console.log(response.status);
-        console.log(response.data);
-      });
+
+    let dataToSend = JSON.stringify(userData);
+    console.log(`Data - ${dataToSend}`);
+
+    let response;
+    if (id) {
+      response = axios.put(`https://gorest.co.in/public/v2/users/${id}`, dataToSend, { headers });
+    } else {
+      response = axios.post(`https://gorest.co.in/public/v2/users`, dataToSend, { headers });
+    }
+
+    response.then((response) => {
+      console.log(response.status);
+      console.log(response.data);
+      navigate('/');
+    });
   };
 
   useEffect(() => {
@@ -69,44 +81,10 @@ const User = () => {
 
   return (
     <>
-      {id === undefined ? <h1>Add new user</h1> : <h1>Edit user</h1>}
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="enter an email"
-          value={user.email}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="name"
-          placeholder="enter a name"
-          value={user.name}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="gender"
-          placeholder="enter a gender"
-          value={user.gender}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="status"
-          placeholder="enter a status"
-          value={user.status}
-          onChange={handleChange}
-        />
-        <button type="submit">{id === undefined ? 'Add' : 'Edit'}</button>
-      </form> */}
       <CContainer sm>
+        {id === undefined ? <h1>Add new user </h1> : <h1>Edit user</h1>}
         <CForm onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <CFormLabel htmlFor="inputID">User ID</CFormLabel>
-            {/* <CFormInput type="text" name="id" id="inputID" value={user.id} disabled /> */}
-          </div>
+          <div className="mb-3"></div>
           <div className="mb-3">
             <CFormLabel htmlFor="inputEmail">Email address</CFormLabel>
             <CFormInput
